@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.3.xsd  
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+
+	<!-- context方式开启注解-->
+	<!-- <context:annotation-config/> -->
+	<!-- 开启注解映射支持 -->
+    <mvc:annotation-driven/>
+	<!-- 开启controller注解支持 <use-default-filters="false" 只扫描指定的注解> -->
+    <context:component-scan base-package="com.web.controllers" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    <!--配置拦截器, 多个拦截器,顺序执行 -->    
+	<mvc:interceptors>    
+	    <mvc:interceptor>    
+	        <!-- 匹配的是url路径， 如果不配置或/**,将拦截所有的Controller -->
+	        <!-- 需拦截的地址 -->
+	        <mvc:mapping path="/**" />
+	        <!-- 需排除拦截的地址 -->
+	        <mvc:exclude-mapping path="/welcome/**" />
+	        <!-- 如果不定义 mvc:mapping path 将拦截所有的URL请求 -->
+	        <bean class="com.web.auth.AuthInterceptor"></bean>
+	    </mvc:interceptor>
+	    <!-- 当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法 -->  
+	</mvc:interceptors>
+    
+	<!-- 如果当前请求为/时，则转发到/index/index -->
+    <mvc:view-controller path="/" view-name="forward:/welcome/index.do"/>
+	<!-- 静态资源映射 -->
+    <mvc:resources mapping="/js/*" location="/WEB-INF/js/" />
+    <!-- 当上面要访问的静态资源不包括在上面的配置中时，则根据此配置来访问 -->
+    <mvc:default-servlet-handler />
+	<!-- 配置视图解析器 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<!-- 配置URL映射 
+	<bean name="/index/index.do" class="com.web.controllers.IndexController" />
+	<bean name="/welcome/index.do" class="com.web.controllers.WelcomeController" />
+	<bean name="/kandy/index.do" class="com.web.controllers.KandyController" />
+	<bean name="/demo/index.do" class="com.web.controllers.DemoController" />-->
+
+	
+</beans>
