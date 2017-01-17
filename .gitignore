@@ -1,0 +1,8 @@
+/.metadata
+/.recommenders
+/RemoteSystemsTempFiles
+/Servers
+/web/.settings
+/web/*.classpath
+/web/*.gitignore
+/web/*.project
