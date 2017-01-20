@@ -2,17 +2,12 @@ package com.web.controllers;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.web.dao.UserDao;
 import com.web.model.User;
 
-@Controller
-@RequestMapping("/user")
 public class UserController {
 
-	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ApplicationContext ctx = null;

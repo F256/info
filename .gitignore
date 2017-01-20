@@ -6,3 +6,7 @@
 /web/*.classpath
 /web/*.gitignore
 /web/*.project
+/f256/.settings
+/f256/*.project
+/f256/*.gitignore
+/f256/*.classpath
